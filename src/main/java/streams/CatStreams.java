@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 record Cat(int weight) {}
-;
 
 /** CatStreams. */
 public class CatStreams {
@@ -94,7 +93,6 @@ public class CatStreams {
      */
     private static int superDuper(int threshold, List<Cat> cats) {
         int result = cats.stream().filter(fettFilter(threshold)).mapToInt(Cat::weight).sum();
-
         return result;
     }
 }
