@@ -48,9 +48,19 @@ public class StringAppend {
         return "";
     }
 
+
     /**
-     * Updated Methode mit Stream.
-     *
+     * formating method.
+     * @param s
+     * @return
+     */
+    private static String addJsonFormat(String s)
+    {
+        return  "\"" + s + "\"";
+    }
+
+    /**
+     * bessere coolere methode.
      * @param parameterNames
      * @return
      */
@@ -60,7 +70,7 @@ public class StringAppend {
         }
 
         return Stream.of(parameterNames)
-                .map(s -> "\"" + s + "\"")
+                .map(StringAppend::addJsonFormat)
                 .collect(Collectors.joining(", ", "[", "]"));
     }
 }
