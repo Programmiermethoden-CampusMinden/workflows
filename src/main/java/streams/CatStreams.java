@@ -43,10 +43,8 @@ public class CatStreams {
      * @return
      */
     private static int sumOverWeightStream(int threshold, List<Cat> cats) {
-        int result =
-                cats.stream().filter(c -> c.weight() > threshold).mapToInt(c -> c.weight()).sum();
 
-        return result;
+        return cats.stream().filter(c -> c.weight() > threshold).mapToInt(c -> c.weight()).sum();
     }
 
     /**
@@ -57,10 +55,8 @@ public class CatStreams {
      * @return
      */
     private static int sumOverWeightStreamMethodenrefferenz(int threshold, List<Cat> cats) {
-        int result =
-                cats.stream().filter(cat -> isFett(threshold, cat)).mapToInt(c -> c.weight()).sum();
 
-        return result;
+        return  cats.stream().filter(cat -> isFett(threshold, cat)).mapToInt(c -> c.weight()).sum();
     }
 
     /**
@@ -92,7 +88,31 @@ public class CatStreams {
      * @return
      */
     private static int superDuper(int threshold, List<Cat> cats) {
-        int result = cats.stream().filter(fettFilter(threshold)).mapToInt(Cat::weight).sum();
-        return result;
+
+        return cats.stream()
+            .filter(fettFilter(threshold))
+            .mapToInt(Cat::weight)
+            .sum();
     }
+
+    private static int getCatWeight(Cat car)
+    {
+        return car.weight();
+    }
+
+    /**
+     * superDuperUltra was auch immer, aber hauptsache richtige Methodenrefferenz.
+     *
+     * @param threshold
+     * @param cats
+     * @return die Ultimative Methode um DAS Übergewicht aller Katzen in (cats) über dem Threshold zu summieren
+     */
+    private static int superDuperRichtigeMethodenRefferenzMethodeSumOverWeith(int threshold, List<Cat> cats)
+    {
+        return cats.stream()
+            .filter(fettFilter(threshold))
+            .mapToInt(CatStreams::getCatWeight)
+            .sum();
+    }
+
 }
