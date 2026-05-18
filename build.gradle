@@ -1,37 +1,42 @@
 plugins {
     id 'java'
-
+    id 'application'
     id 'com.diffplug.spotless' version '8.4.0'
 }
-
 
 repositories {
     mavenCentral()
 }
 
-
 dependencies {
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
-    testImplementation 'org.junit.jupiter:junit-jupiter:6.0.3'
-    // https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:6.0.3'
-
-    // https://mvnrepository.com/artifact/org.mockito/mockito-core
-    testImplementation 'org.mockito:mockito-core:5.23.0'
+    testImplementation platform('org.junit:junit-bom:6.0.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-    sourceCompatibility = JavaVersion.VERSION_21
+// use current LTS release: Java 25
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+java.sourceCompatibility = JavaVersion.VERSION_25
+java.targetCompatibility = JavaVersion.VERSION_25
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 25
 }
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-sourceSets.main.java.srcDirs = ['src/main/java/', 'solution/main/java/']
-sourceSets.test.java.srcDirs = ['src/test/java/']
 
+// main()
+application {
+    // TODO: Define your main class here
+    mainClass = 'regex.Main'
+}
+
+
+// misc settings
+tasks.named('run') {
+    standardInput = System.in
+}
 
 test {
     useJUnitPlatform()
@@ -39,6 +44,9 @@ test {
 
 spotless {
     java {
-        googleJavaFormat().aosp().reflowLongStrings()
+        googleJavaFormat().reflowLongStrings()
+
+        target '**/*.java'
+        targetExclude('build/generated-src/**')
     }
 }
